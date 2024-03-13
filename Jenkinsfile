@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     environment {
-        DOCKERHUB_CREDENTIALS = credentials('docker_jenkins')
+        DOCKERHUB_CREDENTIALS = credentials('vjacomeg')
     }
 
     tools {
@@ -25,17 +25,13 @@ pipeline {
             }
         }
 
-        stage('Docker Login') {
+        stage('Docker Login and Push image') {
             steps {
-                withCredentials([usernamePassword(credentialsId: 'docker_jenkins', passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW', usernameVariable: 'DOCKERHUB_CREDENTIALS_USR')]) {
-                    sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW'
+                script {
+                    withCredentials([usernamePassword(credentialsId: 'vjacomeg', passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW', usernameVariable: 'DOCKERHUB_CREDENTIALS_USR')]) {
+                        sh 'docker login -u $DOCKERHUB_CREDENTIALS_USR -p $DOCKERHUB_CREDENTIALS_PSW && docker push vjacomeg/devops_lab3:tagname'
+                    }
                 }
-            }
-        }
-
-        stage('Docker Push image') {
-            steps {
-                sh 'docker push vjacomeg/devops_lab3:tagname'
             }
         }
     }
