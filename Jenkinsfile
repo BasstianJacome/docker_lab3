@@ -4,7 +4,7 @@ pipeline{
         DOCKERHUB_CREDENTIALS = credentials('docker_jenkins')
     }
     tools{
-        maven 'Maven'
+        maven 'MAVEN3'
     }
     stages{
         stage('Build Maven') {
