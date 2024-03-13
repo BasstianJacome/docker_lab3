@@ -1,7 +1,7 @@
 pipeline{
     agent any
         environment {
-        DOCKERHUB_CREDENTIALS = credentials('docker-hub-login')
+        DOCKERHUB_CREDENTIALS = credentials('docker_jenkins')
     }
     tools{
         maven 'Maven'
@@ -9,7 +9,7 @@ pipeline{
     stages{
         stage('Build Maven') {
             steps{
-                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/BasstianJacome/devOpsLab3.git']])
+                checkout scmGit(branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/BasstianJacome/docker_lab3.git']])
                 sh 'mvn clean install'
             }
         }
