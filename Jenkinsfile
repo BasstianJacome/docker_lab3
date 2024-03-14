@@ -23,8 +23,9 @@ pipeline{
         stage('Docker Login') {
             steps{
                 script{
-                    bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
-
+                    withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_CREDENTIALS2', passwordVariable: 'password', usernameVariable: 'name')]) {
+                                // some block
+                            }
 
                 }
             }
@@ -34,5 +35,7 @@ pipeline{
                 bat 'docker push vjacomeg/devops_lab3:tagname'
            }
         }
+
+
     }
 }
