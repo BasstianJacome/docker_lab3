@@ -20,13 +20,19 @@ pipeline{
                 }
             }
         }
-       stage('Docker Login and Push image') {
-                   steps {
-                       script {
-                           withCredentials([usernamePassword(credentialsId: 'docker_jenkins', passwordVariable: 'DOCKERHUB_CREDENTIALS_PSW', usernameVariable: 'DOCKERHUB_CREDENTIALS_USR')]) {
-                               bat 'docker login -u %DOCKERHUB_CREDENTIALS_USR% -p %DOCKERHUB_CREDENTIALS_PSW% && docker push vjacomeg/devops_lab3:tagname'
-                           }
-                       }
-                   }
+        stage('Docker Login') {
+            steps{
+                script{
+                    bat 'echo $DOCKERHUB_CREDENTIALS_PSW | docker login -u $DOCKERHUB_CREDENTIALS_USR --password-stdin'
+
+
+                }
+            }
+        }
+        stage('Docker Push image') {
+            steps {
+                bat 'docker push vjacomeg/devops_lab3:tagname'
+           }
+        }
     }
 }
