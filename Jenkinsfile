@@ -32,7 +32,12 @@ pipeline{
         }
         stage('Docker Push image') {
             steps {
-                bat "docker login -u vjacomeg -p ${password} && docker push vjacomeg/devops_lab3:tagname"
+                script{
+                        withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_CREDENTIALS2', passwordVariable: 'password', usernameVariable: 'name')]) {
+                                               bat "docker login -u vjacomeg -p ${password} && docker push vjacomeg/devops_lab3:tagname"
+                                            }
+
+                                }
            }
         }
 
