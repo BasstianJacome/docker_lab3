@@ -24,7 +24,7 @@ pipeline{
             steps{
                 script{
                     withCredentials([usernamePassword(credentialsId: 'DOCKERHUB_CREDENTIALS2', passwordVariable: 'password', usernameVariable: 'name')]) {
-                               // bat 'docker login -u %DOCKERHUB_CREDENTIALS_USR% -p %DOCKERHUB_CREDENTIALS_PSW% && docker push vjacomeg/devops_lab3:tagname'
+                               bat "docker login -u ${name} -p ${password} && docker push vjacomeg/devops_lab3:tagname"
                             }
 
                 }
